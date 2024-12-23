@@ -1,0 +1,63 @@
+﻿@model Models.Course
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @* @Html.DisplayNameFor(model => model.InstructorId) *@
+            Instructor
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.instructor.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @* @Html.DisplayNameFor(model => model.CategoryId) *@
+            Category
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.category.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Students
+        </dt>
+        <dd class="col-sm-10">
+            @Model.learner_courses.Count
+        </dd>
+        <dt class="col-sm-2">
+            @* @Html.DisplayNameFor(model => model.ImageUrl) *@
+            Image
+        </dt>
+        <dd class="col-sm-10">
+            <img src="@Model.ImageUrl" style="border-radius:5px;border:2px solid #bbb9b9;" />
+        </dd>
+    </dl>
+   
+   <div class="btn">         
+    <a asp-area="Learner" asp-controller="Home" asp-action="Index">Back to List</a>
+    </div>
+
+</div>

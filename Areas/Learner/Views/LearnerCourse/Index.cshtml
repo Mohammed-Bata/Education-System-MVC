@@ -1,0 +1,31 @@
+﻿@model List<Course>
+
+<h1>Courses</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var course in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@course.ImageUrl" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Title</h5>
+                        @* <p class="card-text">@course.Description</p>
+
+                        <p class="card-text"><small class="text-muted">Category: @course.category.Name</small></p>
+                        <p class="card-text"><small class="text-muted">Learner: @course.learner_courses.Count</small></p> *@
+                        <p class="card-text"><small class="text-muted">Instructor: @course.instructor.Name</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="LearnerCourse" asp-action="Join" asp-route-id="@course.Id" class="btn btn-primary mx-2">
+                            <i class="bi bi-plus-square-fill"></i> Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

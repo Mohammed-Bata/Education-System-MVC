@@ -1,0 +1,43 @@
+﻿@model CoursesVM
+
+<h1 class="mb-3">My Courses</h1>
+
+<div class="container">
+    <div class="row">
+        @foreach (var course in Model.Data)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@course.ImageUrl" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Title</h5>
+                        @* <p class="card-text">@course.Description</p>
+
+                        <p class="card-text"><small class="text-muted">Category: @course.category.Name</small></p>
+                        <p class="card-text"><small class="text-muted">Learner: @course.learner_courses.Count</small></p> *@
+                        <p class="card-text"><small class="text-muted">Instructor: @course.instructor.Name</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="LearnerCourse" asp-action="Leave" asp-route-id="@course.Id" class="btn btn-danger mx-2">
+                                    <i class="bi bi-dash-circle"></i> Leave
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="pagination">
+        @if (Model.totalPages > 1)
+        {
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.totalPages; i++)
+                {
+                    <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("MyIndex", new {  pageSize = Model.pageSize ,pageNumber = i})">@i</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
+

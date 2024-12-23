@@ -1,0 +1,78 @@
+﻿@using Utility
+@model CoursesVM
+
+
+<h2>Courses</h2>
+
+<div class="container">
+    <div class="row">
+        <div style="display:flex;overflow:auto;" class="mb-3">
+        @foreach(var category in Model.Categories)
+        {
+                <a href="@Url.Action("Index", new { categoryId = category.Id })" class="btn btn-secondary mx-2">@category.Name</a>
+        }
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var course in Model.Data)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@course.ImageUrl" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Title</h5>
+                        @* <p class="card-text">@course.Description</p>
+
+                        <p class="card-text"><small class="text-muted">Category: @course.category.Name</small></p>
+                        <p class="card-text"><small class="text-muted">Learners: @course.learner_courses.Count</small></p> *@
+                        <p class="card-text"><small class="text-muted">Instructor: @course.instructor.Name</small></p>
+                    </div>
+                    <div class="card-footer">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole(Roles.Role_Admin))
+                            {
+                                <a asp-area="Instructor" asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger">
+                                    <i class="bi bi-dash-circle"></i> Delete
+                                </a>
+                                <a asp-area="Instructor" asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary mx-2">
+                                    <i class="bi bi-plus-square-fill"></i> Details
+                                </a>
+                            }
+                            else
+                            {
+                                @if (User.IsInRole(Roles.Role_Learner))
+                                {
+                                    <a asp-controller="LearnerCourse" asp-action="Join" asp-route-id="@course.Id" class="btn btn-primary mx-2">
+                                        <i class="bi bi-plus-square-fill"></i> Details
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-area="Instructor" asp-controller="Course" asp-action="Details" asp-route-id="@course.Id" class="btn btn-primary">View Details</a>
+                                }
+                            }    
+                        }
+                        else
+                        {
+                            <a href="/Identity/Account/Login" class="btn btn-primary">View Details</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="pagination">
+        @if (Model.totalPages > 1)
+        {
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.totalPages; i++)
+                {
+                    <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("Index", new {  pageSize = Model.pageSize ,pageNumber = i})">@i</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>

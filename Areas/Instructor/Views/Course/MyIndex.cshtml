@@ -1,0 +1,56 @@
+﻿@model CoursesVM
+
+<h1>My Courses</h1>
+
+<div class="container">
+    <div class="row pb-3">
+        <div class="col-6">
+        </div>
+        <div class="col-6 text-end">
+            <a asp-area="Instructor" asp-controller="Course" asp-action="Create" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i>  Create New Course
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        @foreach (var course in Model.Data)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img class="card-img-top" src="@course.ImageUrl" alt="Course Image">
+                    <div class="card-body">
+                        <h5 class="card-title">@course.Title</h5>
+                        @* <p class="card-text">@course.Description</p>
+
+                        <p class="card-text"><small class="text-muted">Category: @course.category.Name</small></p>
+                        <p class="card-text"><small class="text-muted">Learners: @course.learner_courses.Count</small></p> *@
+                        <p class="card-text"><small class="text-muted">Instructor: @course.instructor.Name</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="w-30 btn-group" role="group">
+                            <a asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-primary mx-2">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger mx-2">
+                                <i class="bi bi-trash-fill"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="pagination">
+        @if (Model.totalPages > 1)
+        {
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.totalPages; i++)
+                {
+                    <li class="page-item @(i == Model.currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("MyIndex", new {  pageSize = Model.pageSize ,pageNumber = i})">@i</a>
+                    </li>
+                }
+            </ul>
+        }
+    </div>
+</div>
